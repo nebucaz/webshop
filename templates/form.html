@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Form Demo - Flask Webshop{% endblock %}
+
+{% block content %}
+<div>
+    <h2 style="color: #667eea; margin-bottom: 20px;">Form Demo</h2>
+    
+    <p style="margin-bottom: 20px;">Fill out the form below to see flash messages in action. Your data will be stored in the session and checked on every request.</p>
+    
+    <form method="POST" action="{{ url_for('form') }}" style="background: #f8f9fa; padding: 30px; border-radius: 8px;">
+        <div style="margin-bottom: 20px;">
+            <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                Your Name:
+            </label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                placeholder="Enter your name"
+                value="{{ session.username if session.username else '' }}"
+                style="width: 100%; padding: 12px; border: 2px solid #dee2e6; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s;"
+                onfocus="this.style.borderColor='#667eea'"
+                onblur="this.style.borderColor='#dee2e6'"
+            >
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label for="user" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                User (try 'bart'):
+            </label>
+            <input 
+                type="text" 
+                id="user" 
+                name="user" 
+                placeholder="Enter user (e.g., bart, homer, lisa)"
+                value="{{ current_user if current_user else '' }}"
+                style="width: 100%; padding: 12px; border: 2px solid #dee2e6; border-radius: 6px; font-size: 1rem; transition: border-color 0.3s;"
+                onfocus="this.style.borderColor='#667eea'"
+                onblur="this.style.borderColor='#dee2e6'"
+            >
+            <small style="color: #6c757d; display: block; margin-top: 5px;">
+                The app will check if this equals 'bart' on every request
+            </small>
+        </div>
+        
+        <button type="submit" class="btn">
+            Submit
+        </button>
+        
+        <a href="{{ url_for('index') }}" class="btn" style="background: #6c757d;">
+            Cancel
+        </a>
+    </form>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+        <h3 style="margin-bottom: 10px; color: #856404;">💡 Tip</h3>
+        <p style="color: #856404;">When you submit the form, you'll see a flash message confirming your submission. The 'user' field will be checked on every request to see if it equals 'bart' - the result is displayed in the header!</p>
+    </div>
+</div>
+{% endblock %}
+

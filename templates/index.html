@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Flask Webshop{% endblock %}
+
+{% block content %}
+<div>
+    <h2 style="color: #667eea; margin-bottom: 20px;">Welcome to Flask Webshop!</h2>
+    
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 style="margin-bottom: 15px;">Session Information</h3>
+        <p><strong>Visit Count:</strong> {{ visit_count }}</p>
+        {% if session.username %}
+            <p><strong>Username:</strong> {{ session.username }}</p>
+        {% else %}
+            <p><em>No username set.</em></p>
+        {% endif %}
+        
+        <div style="margin-top: 15px; padding: 15px; background: {% if is_user_bart %}#d4edda{% elif current_user %}#fff3cd{% else %}#f8d7da{% endif %}; border-radius: 6px;">
+            <p style="margin: 0;"><strong>User Session Variable:</strong></p>
+            {% if current_user %}
+                <p style="margin: 5px 0 0 0;">Value: <code style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 3px;">{{ current_user }}</code></p>
+                <p style="margin: 5px 0 0 0;">Status: <strong>{{ user_check_status }}</strong></p>
+            {% else %}
+                <p style="margin: 5px 0 0 0;"><em>Not set. Visit the <a href="{{ url_for('form') }}" style="color: #667eea;">form page</a> or use quick links below.</em></p>
+            {% endif %}
+        </div>
+        
+        <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 6px; border-left: 4px solid #ffc107;">
+            <p style="margin: 0; color: #856404;"><strong>⚠️ App Secret Key:</strong></p>
+            <p style="margin: 5px 0 0 0; word-break: break-all;"><code style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 3px; font-size: 0.9rem; color: #856404;">{{ secret_key }}</code></p>
+            <p style="margin: 10px 0 0 0; font-size: 0.85rem; color: #856404;"><em>Note: Never expose this in production! This is for demo purposes only.</em></p>
+        </div>
+    </div>
+    
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 style="margin-bottom: 15px;">Quick Actions - Set User</h3>
+        <a href="{{ url_for('set_user', username='bart') }}" class="btn" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">Set User to 'bart'</a>
+        <a href="{{ url_for('set_user', username='homer') }}" class="btn" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Set User to 'homer'</a>
+        <a href="{{ url_for('set_user', username='lisa') }}" class="btn" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Set User to 'lisa'</a>
+    </div>
+    
+    <div style="background: #e7f3ff; padding: 20px; border-radius: 8px; border-left: 4px solid #2196F3; margin-bottom: 20px;">
+        <h3 style="margin-bottom: 15px; color: #1976D2;">About This App</h3>
+        <p>This is a simple Flask application demonstrating:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+            <li><strong>Session Cookies:</strong> Your visit count is tracked using Flask sessions</li>
+            <li><strong>Flash Messages:</strong> Temporary messages that display once after redirects</li>
+            <li><strong>Modern UI:</strong> Clean, responsive design with smooth animations</li>
+        </ul>
+    </div>
+    
+    <div>
+        <h3 style="margin-bottom: 15px;">Try These Actions:</h3>
+        <a href="{{ url_for('buy') }}" class="btn" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">🐛 Buy Product (Test Debugger)</a>
+        <a href="{{ url_for('trigger_flash') }}" class="btn">Trigger Flash Messages</a>
+        <a href="{{ url_for('form') }}" class="btn">Fill Out Form</a>
+        <a href="{{ url_for('clear_session') }}" class="btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">Clear Session</a>
+    </div>
+</div>
+{% endblock %}
+
